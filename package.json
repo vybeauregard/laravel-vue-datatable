@@ -1,6 +1,6 @@
 {
   "name": "laravel-vue-datatable",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Vue.js datatable made with Laravel and Bootstrap in mind",
   "author": "James Dordoy <jamesdordoy@gmail.com>",
   "homepage": "https://jamesdordoy.github.io/laravel-vue-datatable/",
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/jamesdordoy/Laravel-Vue-Datatable.git"
+    "url": "https://github.com/vybeauregard/laravel-vue-datatable.git"
   },
   "scripts": {
     "serve": "vue-cli-service serve documentation/main.ts",
@@ -25,7 +25,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "lodash.debounce": "^4.0.8",
     "lodash.defaultsdeep": "^4.6.1",
     "tailable-pagination": "^0.1.22",
