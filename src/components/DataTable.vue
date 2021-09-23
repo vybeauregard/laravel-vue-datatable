@@ -115,7 +115,6 @@ import ThemeValidator from "../validators/data-table-theme";
 import OrderDirValidator from "../validators/data-table-order-dir";
 import FrameworkValidator from "../validators/data-table-framework";
 const CancelToken = axios.CancelToken;
-let cancel;
 
 export default {
   components: {
@@ -126,6 +125,7 @@ export default {
   data() {
     return {
       debounceGetData: () => {},
+      cancel: undefined,
       tableData: {},
       sortKey: "id",
       sortOrders: {},
@@ -195,8 +195,8 @@ export default {
   methods: {
     async getData(url = this.url, options = this.getRequestPayload) {
       console.log("canceling any pending requests");
-      if (typeof cancel !== typeof undefined) {
-        cancel();
+      if (this.cancel !== undefined) {
+        this.cancel();
       }
       this.$emit("loading");
 
@@ -205,7 +205,7 @@ export default {
 
       options.cancelToken = new CancelToken(function executor(c) {
         // An executor function receives a cancel function as a parameter
-        cancel = c;
+        this.cancel = c;
       });
 
       let response = await axios.get(baseUrl, options).catch((errors) => {
