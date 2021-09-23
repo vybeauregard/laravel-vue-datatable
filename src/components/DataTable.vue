@@ -194,8 +194,8 @@ export default {
 
   methods: {
     async getData(url = this.url, options = this.getRequestPayload) {
-      console.log("getData from the inside!");
-      console.log(source);
+      console.log("canceling any pending requests");
+      source.cancel();
       this.$emit("loading");
 
       //Remove any custom query string parameters
