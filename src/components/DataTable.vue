@@ -125,7 +125,7 @@ export default {
   data() {
     return {
       debounceGetData: () => {},
-      cancel: {},
+      cancel: () => {},
       tableData: {},
       sortKey: "id",
       sortOrders: {},
@@ -195,9 +195,7 @@ export default {
   methods: {
     async getData(url = this.url, options = this.getRequestPayload) {
       console.log("canceling any pending requests");
-      if (typeof this.cancel !== typeof {}) {
-        this.cancel();
-      }
+      this.cancel();
       this.$emit("loading");
 
       //Remove any custom query string parameters
