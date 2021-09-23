@@ -114,6 +114,8 @@ import BootstrapTableTheme from "../themes/Bootstrap";
 import ThemeValidator from "../validators/data-table-theme";
 import OrderDirValidator from "../validators/data-table-order-dir";
 import FrameworkValidator from "../validators/data-table-framework";
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 
 export default {
   components: {
@@ -193,13 +195,20 @@ export default {
   methods: {
     async getData(url = this.url, options = this.getRequestPayload) {
       console.log("getData from the inside!");
+      console.log(source);
       this.$emit("loading");
 
       //Remove any custom query string parameters
       let baseUrl = url.split("?")[0];
 
+      options.cancelToken = source.token;
+
       let response = await axios.get(baseUrl, options).catch((errors) => {
-        alert(errors);
+        if (axios.isCancel(errors)) {
+          console.log("Request canceled", errors.message);
+        } else {
+          alert(errors);
+        }
       });
 
       if (response) {

@@ -16808,12 +16808,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"a11e7132-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DataTable.vue?vue&type=template&id=97621844&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"a11e7132-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DataTable.vue?vue&type=template&id=ade689be&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:_vm.getClasses.container},[_vm._t("filters",[_c('laravel-vue-data-table-filters',{attrs:{"per-page":_vm.perPage,"framework":_vm.framework,"table-data":_vm.tableProps,"placeholder-search":_vm.translate.placeholderSearch}})],{"url":_vm.url,"perPage":_vm.perPage,"tableData":_vm.tableData,"meta":_vm.tableData.meta,"links":_vm.tableData.links,"tableFilters":_vm.tableProps,"loadDiffrentPage":_vm.loadDiffrentPage}),_c('laravel-vue-table',{attrs:{"sortKey":_vm.sortKey,"columns":_vm.columns,"dir":_vm.tableProps.dir,"sortOrders":_vm.sortOrders,"table-classes":_vm.getClasses.table,"table-head-classes":_vm.getClasses['th'],"table-header-classes":_vm.getClasses['t-head'],"table-row-classes":_vm.getClasses['t-head-tr'],"table-container-classes":_vm.getClasses['table-container']},on:{"sort":_vm.sortBy}},[(_vm.headerSlot)?_c('template',{slot:"header"},[_vm._t("header",null,{"tableProps":_vm.tableProps})],2):_vm._e(),(_vm.bodySlot)?_c('template',{slot:"body"},[_vm._t("body",null,{"data":_vm.tableData.data})],2):_c('template',{slot:"body"},[(_vm.columns)?_c('tbody',{staticClass:"laravel-vue-datatable-tbody",class:_vm.getClasses['t-body']},_vm._l((_vm.tableData.data),function(item,rowIndex){return _c('tr',{key:item.id,staticClass:"laravel-vue-datatable-tbody-tr",class:_vm.getClasses['t-body-tr'],on:{"click":function($event){return _vm.$emit('row-clicked', item)}}},_vm._l((_vm.columns),function(column,columnIndex){return _c('td',{key:column.name,staticClass:"laravel-vue-datatable-td",class:_vm.bodyCellClasses(column)},[_c('laravel-vue-data-table-cell',{attrs:{"row":rowIndex,"column":columnIndex,"value":item,"transform":column.transform,"name":column.name,"meta":column.meta,"event":column.event,"classes":column.classes,"handler":column.handler,"comp":column.component}})],1)}),0)}),0):_vm._e(),_vm._t("footer",null,{"tableProps":_vm.tableProps})],2)],2),_vm._t("pagination",[_c('tailable-pagination',{attrs:{"data":_vm.tableData,"showNumbers":true,"framework":_vm.framework,"translate":_vm.translate,"size":_vm.pagination.size,"limit":_vm.pagination.limit},on:{"page-changed":_vm.paginationChangePage}})],{"page":_vm.page,"meta":_vm.tableData.meta,"links":_vm.tableData.links,"loadDiffrentPage":_vm.loadDiffrentPage})],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/DataTable.vue?vue&type=template&id=97621844&
+// CONCATENATED MODULE: ./src/components/DataTable.vue?vue&type=template&id=ade689be&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.find-index.js
 var es_array_find_index = __webpack_require__("c740");
@@ -17922,6 +17922,8 @@ var DataTableFilters_component = normalizeComponent(
 
 
 
+var CancelToken = axios_default.a.CancelToken;
+var source = CancelToken.source();
 /* harmony default export */ var DataTablevue_type_script_lang_js_ = ({
   components: {
     "laravel-vue-table": Table,
@@ -18009,17 +18011,23 @@ var DataTableFilters_component = normalizeComponent(
                 url = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : _this2.url;
                 options = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : _this2.getRequestPayload;
                 console.log("getData from the inside!");
+                console.log(source);
 
                 _this2.$emit("loading"); //Remove any custom query string parameters
 
 
                 baseUrl = url.split("?")[0];
-                _context.next = 7;
+                options.cancelToken = source.token;
+                _context.next = 9;
                 return axios_default.a.get(baseUrl, options).catch(function (errors) {
-                  alert(errors);
+                  if (axios_default.a.isCancel(errors)) {
+                    console.log("Request canceled", errors.message);
+                  } else {
+                    alert(errors);
+                  }
                 });
 
-              case 7:
+              case 9:
                 response = _context.sent;
 
                 if (response) {
@@ -18035,7 +18043,7 @@ var DataTableFilters_component = normalizeComponent(
                   }
                 }
 
-              case 9:
+              case 11:
               case "end":
                 return _context.stop();
             }
