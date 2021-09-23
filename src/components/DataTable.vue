@@ -115,7 +115,7 @@ import ThemeValidator from "../validators/data-table-theme";
 import OrderDirValidator from "../validators/data-table-order-dir";
 import FrameworkValidator from "../validators/data-table-framework";
 const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
+let cancel;
 
 export default {
   components: {
@@ -195,13 +195,18 @@ export default {
   methods: {
     async getData(url = this.url, options = this.getRequestPayload) {
       console.log("canceling any pending requests");
-      source.cancel();
+      if (typeof cancel !== typeof undefined) {
+        cancel();
+      }
       this.$emit("loading");
 
       //Remove any custom query string parameters
       let baseUrl = url.split("?")[0];
 
-      options.cancelToken = source.token;
+      options.cancelToken = new CancelToken(function executor(c) {
+        // An executor function receives a cancel function as a parameter
+        cancel = c;
+      });
 
       let response = await axios.get(baseUrl, options).catch((errors) => {
         if (axios.isCancel(errors)) {
