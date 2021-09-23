@@ -17765,8 +17765,8 @@ var DataTableFilters_component = normalizeComponent(
     "table-responsive": true
   },
   "table": {
-    "table": true,
-    "table-striped": true,
+    "table": false,
+    "table-striped": false,
     "border": true
   },
   "t-head": {},
