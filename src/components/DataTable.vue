@@ -200,10 +200,10 @@ export default {
 
       //Remove any custom query string parameters
       let baseUrl = url.split("?")[0];
-
+      let self = this;
       options.cancelToken = new CancelToken(function executor(c) {
         // An executor function receives a cancel function as a parameter
-        this.cancel = c;
+        self.cancel = c;
       });
 
       let response = await axios.get(baseUrl, options).catch((errors) => {
