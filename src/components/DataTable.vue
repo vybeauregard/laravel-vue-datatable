@@ -194,7 +194,6 @@ export default {
 
   methods: {
     async getData(url = this.url, options = this.getRequestPayload) {
-      console.log("canceling any pending requests");
       this.cancel();
       this.$emit("loading");
 
@@ -208,7 +207,9 @@ export default {
 
       let response = await axios.get(baseUrl, options).catch((errors) => {
         if (axios.isCancel(errors)) {
-          console.log("Request canceled", errors.message);
+          if (typeof errors.message != typeof undefined) {
+            console.log("Request canceled", errors.message);
+          }
         } else {
           alert(errors);
         }
